@@ -16,13 +16,16 @@ namespace ConsoleInRainApp
 		private int _width;
 		private ConsoleColor _color;
 
-		//Default constructor
+		//Default constructor - biuld a rectangle with random values
 		public MyRect()
 		{
-			_vertex = new Point(1, 1); //default vertex
-			_height = 8;
-			_width = 16;
-			_color = ConsoleColor.DarkCyan;
+			Random rnd = new Random();
+			_height = rnd.Next(3, 10);
+			_width = rnd.Next(3, 10);
+			_color = (ConsoleColor)rnd.Next(1, 16);
+			_vertex = new Point(
+				rnd.Next(1, Console.WindowWidth - _width), 
+				rnd.Next(1, Console.WindowHeight - _height));
 		}
 		public MyRect(Point vertex, int height, int width, ConsoleColor color)
 		{
@@ -31,12 +34,10 @@ namespace ConsoleInRainApp
 			_width = width;
 			_color = color;
 		}
-
 		public override string ToString()
 		{
 			return $"Vertex: {_vertex}\nHeight: {_height}\nWidth: {_width}\nColor: {_color}";
 		}
-
 		public void Draw()
 		{
 			//Console.Clear();

@@ -4,16 +4,19 @@ using ConsoleInRainApp;
 using System.Drawing;
 
 
+DrawRandomRectangle2();
 
+void DrawRandomRectangle2()
+{
+	MyRect myRect;
 
-MyRect myRect1 = new MyRect(new Point(10, 5), 4, 8, ConsoleColor.Yellow);
-myRect1.Draw();
-
-MyRect myRect2 = new MyRect();
-myRect2.Draw();
-
-
-//DrawRandomRectangle();
+	while (true)
+	{
+		myRect = new MyRect();
+		myRect.Draw();
+		Thread.Sleep(150);
+	}
+}
 
 //void DrawRandomRectangle()
 //{
