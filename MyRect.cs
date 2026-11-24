@@ -130,6 +130,24 @@ namespace ConsoleInRainApp
 			Vertex = new Point(Vertex.X + 1, Vertex.Y);
 			Draw();
 		}
+		public void MoveLeft()
+		{
+			UnDraw();
+			Vertex = new Point(Vertex.X - 1, Vertex.Y);
+			Draw();
+		}
+		public void MoveUp()
+		{
+			UnDraw();
+			Vertex = new Point(Vertex.X, Vertex.Y - 1);
+			Draw();
+		}
+		public void MoveDown()
+		{
+			UnDraw();
+			Vertex = new Point(Vertex.X, Vertex.Y + 1);
+			Draw();
+		}
 		public void MoveRightCycle()
 		{
 			int maxX = Console.WindowWidth - Width - 1;
@@ -155,7 +173,7 @@ namespace ConsoleInRainApp
 				Console.Write(new string(' ', Width));
 			}
 		}
-		private void DrawRectangleCycle(ConsoleColor color)
+		private void DrawRectangleCycle2(ConsoleColor color)
 		{
 			if (Width < 2 || Height < 2) return;
 
@@ -179,6 +197,59 @@ namespace ConsoleInRainApp
 
 					if (y < 0 || y >= Console.WindowHeight)
 						continue;
+
+					char ch = ' ';
+
+					if (row == 0)
+					{
+						if (col == 0) ch = tl;
+						else if (col == Width - 1) ch = tr;
+						else ch = hLine;
+					}
+					else if (row == Height - 1)
+					{
+						if (col == 0) ch = bl;
+						else if (col == Width - 1) ch = br;
+						else ch = hLine;
+					}
+					else
+					{
+						if (col == 0 || col == Width - 1)
+							ch = vLine;
+						else
+							continue;
+					}
+
+					Console.SetCursorPosition(x, y);
+					Console.Write(ch);
+				}
+			}
+		}
+		private void DrawRectangleCycle(ConsoleColor color)
+		{
+			if (Width < 2 || Height < 2) return;
+
+			Console.ForegroundColor = color;
+
+			int windowWidth = Console.WindowWidth;
+			int windowHeight = Console.WindowHeight;
+
+			char tl = '╔';
+			char tr = '╗';
+			char bl = '╚';
+			char br = '╝';
+			char hLine = '═';
+			char vLine = '║';
+
+			for (int row = 0; row < Height; row++)
+			{
+				for (int col = 0; col < Width; col++)
+				{
+					int x = ((Vertex.X + col) % windowWidth
+							 + windowWidth) % windowWidth;
+
+					int y = ((Vertex.Y + row) % windowHeight
+							 + windowHeight) % windowHeight;
 
 					char ch = ' ';
 

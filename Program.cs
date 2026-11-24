@@ -3,13 +3,13 @@
 using ConsoleInRainApp;
 using System.Drawing;
 
+MyRect myRect;
+StartDrawRectangle();
 
-DrawRandomRectangle2();
-
-void DrawRandomRectangle2()
+void StartDrawRectangle()
 {
 	ConsoleKeyInfo info;
-	MyRect myRect = new MyRect();
+	myRect = new MyRect();
 	myRect.Draw();
 
 	while (true)
@@ -19,6 +19,18 @@ void DrawRandomRectangle2()
 		{
 			case ConsoleKey.RightArrow:
 				myRect.MoveRight();
+				break;
+
+			case ConsoleKey.LeftArrow:
+				myRect.MoveLeft();
+				break;
+			
+			case ConsoleKey.UpArrow:
+				myRect.MoveUp();
+				break;
+
+			case ConsoleKey.DownArrow:
+				myRect.MoveDown();
 				break;
 		}
 	}
