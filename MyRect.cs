@@ -30,7 +30,8 @@ namespace ConsoleInRainApp
 			//Vertex = new Point(
 			//	rnd.Next(1, Console.WindowWidth - Width), 
 			//	rnd.Next(1, Console.WindowHeight - Height));
-					
+			
+			
 			Height = 8;
 			Width = 16;
 			Color = ConsoleColor.Yellow;
