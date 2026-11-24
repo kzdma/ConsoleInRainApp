@@ -10,40 +10,59 @@ namespace ConsoleInRainApp
 	// מחלקה המייצגת מלבן
 	public class MyRect
 	{
-		//קודקוד
-		private Point _vertex; // קודקוד של המלבן שמאלי עליון
-		private int _height;
-		private int _width;
-		private ConsoleColor _color;
+		#region Properties	
+		public Point Vertex { get; set; } // קודקוד של המלבן שמאלי עליון
+		public int Height {  get; set; }
+		public int Width { get; set; }
+		public ConsoleColor Color {  get; set; }
 
+		#endregion
+
+	
 		//Default constructor - biuld a rectangle with random values
 		public MyRect()
 		{
-			Random rnd = new Random();
-			_height = rnd.Next(3, 10);
-			_width = rnd.Next(3, 10);
-			_color = (ConsoleColor)rnd.Next(1, 16);
-			_vertex = new Point(
-				rnd.Next(1, Console.WindowWidth - _width), 
-				rnd.Next(1, Console.WindowHeight - _height));
+			//Random Rectangle
+			//Random rnd = new Random();
+			//Height = rnd.Next(3, 10);
+			//Width = rnd.Next(3, 10);
+			//Color = (ConsoleColor)rnd.Next(1, 16);
+			//Vertex = new Point(
+			//	rnd.Next(1, Console.WindowWidth - Width), 
+			//	rnd.Next(1, Console.WindowHeight - Height));
+					
+			Height = 8;
+			Width = 16;
+			Color = ConsoleColor.Yellow;
+			Vertex = new Point(3, 4);
 		}
 		public MyRect(Point vertex, int height, int width, ConsoleColor color)
 		{
-			_vertex = vertex;
-			_height = height;
-			_width = width;
-			_color = color;
+			Vertex = vertex;
+			Height = height;
+			Width = width;
+			Color = color;
 		}
 		public override string ToString()
 		{
-			return $"Vertex: {_vertex}\nHeight: {_height}\nWidth: {_width}\nColor: {_color}";
+			return $"Vertex: {Vertex}\nHeight: {Height}\nWidth: {Width}\nColor: {Color}";
+		}		
+		public void UnDraw()
+		{
+			//DrawRectangle(ConsoleColor.Black);
+			DrawRectangleCycle(ConsoleColor.Black);
 		}
 		public void Draw()
 		{
+			//DrawRectangle(this.Color);
+			DrawRectangleCycle(this.Color);
+		}
+		private void DrawRectangle(ConsoleColor color)
+		{
 			//Console.Clear();
-			if (_width < 2 || _height < 2) return; // Prevent crashes with impossible dimensions
+			if (Width < 2 || Height < 2) return; // Prevent crashes with impossible dimensions
 
-			Console.ForegroundColor = _color;
+			Console.ForegroundColor = color;
 
 			// --- Define the Box-Drawing Elements ---
 
@@ -67,27 +86,125 @@ namespace ConsoleInRainApp
 
 
 			// --- 1. Draw Top and Bottom Horizontal Borders ---
-			string horizontalBar = new string(hLine, _width - 2);
+			string horizontalBar = new string(hLine, Width - 2);
 
-			Console.SetCursorPosition(_vertex.X, _vertex.Y);
+			int temp = Console.WindowWidth;
+			Console.SetCursorPosition(Vertex.X, Vertex.Y-1); Console.Write(Vertex.X + " ");
+
+			Console.SetCursorPosition(Vertex.X, Vertex.Y);  
 			Console.Write(tl + horizontalBar + tr); // Top edge
 
-			Console.SetCursorPosition(_vertex.X, _vertex.Y + _height - 1);
+			Console.SetCursorPosition(Vertex.X, Vertex.Y + Height - 1);
 			Console.Write(bl + horizontalBar + br); // Bottom edge
 
 			//// --- 2. Draw Vertical Borders ---
-			for (int i = 1; i < _height - 1; i++)
+			for (int i = 1; i < Height - 1; i++)
 			{
 				//Console.SetCursorPosition(_vertex.X, _vertex.X == 0 ? _vertex.Y + i : _vertex.X + 0); // Guarding cursor tracking
-				Console.SetCursorPosition(_vertex.X, _vertex.Y + i);
+				Console.SetCursorPosition(Vertex.X, Vertex.Y + i);
 				Console.Write(vLine);
 
 				// Right Wall
-				Console.SetCursorPosition(_vertex.X + _width - 1, _vertex.Y + i);
+				Console.SetCursorPosition(Vertex.X + Width - 1, Vertex.Y + i);
 				Console.Write(vLine);
 			}
 			Console.WriteLine();
 			Console.WriteLine();
+		}
+		public void MoveRight()
+		{
+			//int maxX = Console.WindowWidth - Width - 1;
+
+			//if (Vertex.X >= maxX)
+			//	return;
+
+			//UnDraw();
+
+			//int newX = Math.Min(, maxX);
+			//Vertex = new Point(newX, Vertex.Y);
+
+			//Draw();	
+
+			UnDraw();
+			Vertex = new Point(Vertex.X + 1, Vertex.Y);
+			Draw();
+		}
+		public void MoveRightCycle()
+		{
+			int maxX = Console.WindowWidth - Width - 1;
+
+			UnDraw();
+
+			if (Vertex.X + 2 <= maxX)
+			{
+				Vertex = new Point(Vertex.X + 2, Vertex.Y);
+			}
+			else
+			{
+				Vertex = new Point(0, Vertex.Y);
+			}
+
+			Draw();
+		}
+		public void UnDraw2()
+		{
+			for (int i = 0; i < Height; i++)
+			{
+				Console.SetCursorPosition(Vertex.X, Vertex.Y + i);
+				Console.Write(new string(' ', Width));
+			}
+		}
+		private void DrawRectangleCycle(ConsoleColor color)
+		{
+			if (Width < 2 || Height < 2) return;
+
+			Console.ForegroundColor = color;
+
+			int windowWidth = Console.WindowWidth;
+
+			char tl = '╔';
+			char tr = '╗';
+			char bl = '╚';
+			char br = '╝';
+			char hLine = '═';
+			char vLine = '║';
+
+			for (int row = 0; row < Height; row++)
+			{
+				for (int col = 0; col < Width; col++)
+				{
+					int x = (Vertex.X + col) % windowWidth;
+					int y = Vertex.Y + row;
+
+					if (y < 0 || y >= Console.WindowHeight)
+						continue;
+
+					char ch = ' ';
+
+					if (row == 0)
+					{
+						if (col == 0) ch = tl;
+						else if (col == Width - 1) ch = tr;
+						else ch = hLine;
+					}
+					else if (row == Height - 1)
+					{
+						if (col == 0) ch = bl;
+						else if (col == Width - 1) ch = br;
+						else ch = hLine;
+					}
+					else
+					{
+						if (col == 0 || col == Width - 1)
+							ch = vLine;
+						else
+							continue;
+					}
+
+					Console.SetCursorPosition(x, y);
+					Console.Write(ch);
+				}
+			}
 		}
 	}
 }

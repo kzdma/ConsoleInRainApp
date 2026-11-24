@@ -8,13 +8,19 @@ DrawRandomRectangle2();
 
 void DrawRandomRectangle2()
 {
-	MyRect myRect;
+	ConsoleKeyInfo info;
+	MyRect myRect = new MyRect();
+	myRect.Draw();
 
 	while (true)
 	{
-		myRect = new MyRect();
-		myRect.Draw();
-		Thread.Sleep(150);
+		info = Console.ReadKey();
+		switch (info.Key)
+		{
+			case ConsoleKey.RightArrow:
+				myRect.MoveRight();
+				break;
+		}
 	}
 }
 
