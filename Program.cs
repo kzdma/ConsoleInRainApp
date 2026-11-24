@@ -3,38 +3,46 @@
 using ConsoleInRainApp;
 using System.Drawing;
 
-MyRect myRect;
-StartDrawRectangle();
 
-void StartDrawRectangle()
-{
-	ConsoleKeyInfo info;
-	myRect = new MyRect();
-	myRect.Draw();
 
-	while (true)
-	{
-		info = Console.ReadKey();
-		switch (info.Key)
-		{
-			case ConsoleKey.RightArrow:
-				myRect.MoveRight();
-				break;
 
-			case ConsoleKey.LeftArrow:
-				myRect.MoveLeft();
-				break;
+//Snake snake = new Snake();
+//snake.Draw();
+
+
+
+//MyRect myRect;
+//StartDrawRectangle();
+
+//void StartDrawRectangle()
+//{
+//	ConsoleKeyInfo info;
+//	myRect = new MyRect();
+//	myRect.Draw();
+
+//	while (true)
+//	{
+//		info = Console.ReadKey();
+//		switch (info.Key)
+//		{
+//			case ConsoleKey.RightArrow:
+//				myRect.MoveRight();
+//				break;
+
+//			case ConsoleKey.LeftArrow:
+//				myRect.MoveLeft();
+//				break;
 			
-			case ConsoleKey.UpArrow:
-				myRect.MoveUp();
-				break;
+//			case ConsoleKey.UpArrow:
+//				myRect.MoveUp();
+//				break;
 
-			case ConsoleKey.DownArrow:
-				myRect.MoveDown();
-				break;
-		}
-	}
-}
+//			case ConsoleKey.DownArrow:
+//				myRect.MoveDown();
+//				break;
+//		}
+//	}
+//}
 
 //void DrawRandomRectangle()
 //{

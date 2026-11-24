@@ -277,6 +277,8 @@ namespace ConsoleInRainApp
 					Console.Write(ch);
 				}
 			}
+
+			Console.ResetColor();
 		}
 	}
 }
